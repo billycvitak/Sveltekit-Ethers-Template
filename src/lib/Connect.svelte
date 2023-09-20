@@ -52,7 +52,7 @@
 		}
 	}
 
-	export async function disconnectWeb3Provider() {
+	async function disconnectWeb3Provider() {
 		try {
 			const { ethereum } = window;
 			if (ethereum) {
