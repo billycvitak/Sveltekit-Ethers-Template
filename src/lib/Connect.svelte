@@ -53,7 +53,7 @@
 		}
 	}
 
-	async function disconnectWeb3Provider() {
+	export async function disconnectWeb3Provider() {
 		try {
 			const { ethereum } = window;
 			if (ethereum) {
@@ -86,16 +86,12 @@
 				console.log('Chain changed');
 				initializeWeb3Provider();
 			});
-
-			ethereum.on('disconnect', () => {
-				console.log('Disconnected');
-				initializeWeb3Provider();
-			});
 		}
 	});
 </script>
 
-<div class="w-1/2 mx-auto bg-black/50 text-white/50 my-8 border border-stone-500/50">
+<slot />
+<div class="w-1/2 text-center mx-auto bg-black/50 text-white/50 my-8 border border-stone-500/50">
 	<h2>Web3 Account Login/Store</h2>
 	{#if $web3Data.connecting}
 		<p>Connecting...</p>

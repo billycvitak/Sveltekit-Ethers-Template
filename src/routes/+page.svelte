@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { web3Data } from '$lib/Stores/web3Store';
 
 	let connectionStatus = '';
@@ -17,6 +17,6 @@
 	}
 </script>
 
-<div>
+<div class="text-center">
 	<p>Connection Status: {connectionStatus}</p>
 </div>

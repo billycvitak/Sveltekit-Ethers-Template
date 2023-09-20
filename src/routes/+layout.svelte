@@ -2,5 +2,6 @@
 	import '../app.css';
 	import Connect from '$lib/Connect.svelte';
 </script>
-<Connect />
+<Connect>
 <slot/>
+</Connect>
