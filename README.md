@@ -1,4 +1,4 @@
-# Reusable Web3 Account Login/Store Template for Svelte
+# Web3 Account Store Template for Svelte + Ethers
 
 This template provides a reusable foundation for integrating Web3 functionality into your Svelte web applications. It includes a pre-configured setup for handling Ethereum account login and storing user account data. You can easily incorporate this template into your projects and customize it as needed.
 
