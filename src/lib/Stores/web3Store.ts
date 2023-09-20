@@ -11,8 +11,12 @@ const web3Data = writable<{
   balance?: ethers.BigNumber;
   signer?: Signer;
   contractAddress: string;
-}>(
-
-);
+  connecting: boolean;
+  connected: boolean;
+}>({
+  contractAddress: '',
+  connecting: false,
+  connected: false,
+});
 
 export { web3Data };

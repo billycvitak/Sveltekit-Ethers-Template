@@ -27,7 +27,9 @@
 					network: network,
 					address: address,
 					balance: balance,
-					signer: signer
+					signer: signer,
+					connecting: false,
+					connected: true
 				}));
 
 				connected = true;
@@ -63,7 +65,9 @@
 				});
 
 				web3Data.set({
-					contractAddress: ''
+					contractAddress: '',
+					connecting: false,
+					connected: false
 				});
 				connected = false;
 			}
