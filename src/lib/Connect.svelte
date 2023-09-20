@@ -3,13 +3,11 @@
 	import { ethers } from 'ethers';
 	import { web3Data } from '$lib/Stores/web3Store';
 
-	let formattedBalance = '0.0000';
-
 	$: {
 		const balanceWei = $web3Data.balance;
 		if (balanceWei) {
 			const balanceInEther = ethers.utils.formatUnits(balanceWei, 'ether');
-			formattedBalance = parseFloat(balanceInEther).toFixed(4);
+			$web3Data.formattedBalance = parseFloat(balanceInEther).toFixed(4);
 		}
 	}
 
@@ -41,7 +39,8 @@
 				connecting: false,
 				connected: true,
 				error: '',
-				contractAddress: ''
+				contractAddress: '',
+				formattedBalance: ''
 			});
 		} catch (err: any) {
 			web3Data.update((data) => ({
@@ -66,7 +65,8 @@
 					contractAddress: '',
 					connecting: false,
 					connected: false,
-					error: ''
+					error: '',
+					formattedBalance: ''
 				});
 			}
 		} catch (err) {
@@ -90,21 +90,19 @@
 	});
 </script>
 
-<slot />
 <div class="w-1/2 text-center mx-auto bg-black/50 text-white/50 my-8 border border-stone-500/50">
-	<h2>Web3 Account Login/Store</h2>
-	{#if $web3Data.connecting}
-		<p>Connecting...</p>
-	{:else if $web3Data.connected}
-		<p>Connected Account:</p>
-		<ul>
-			<li><strong>Address:</strong> {$web3Data.address}</li>
-			<li><strong>Network:</strong> {$web3Data.network?.name}</li>
-			<li><strong>Balance:</strong> {formattedBalance} ETH</li>
-		</ul>
-		<button on:click={disconnectWeb3Provider}>Disconnect</button>
+	<h2 class="font-bold">Web3 Account Login/Store</h2>
+	{#if $web3Data.connected}
+		<button
+			class="py-2 px-2 m-2 rounded-lg bg-white/20 border border-black/50"
+			on:click={disconnectWeb3Provider}>Disconnect</button
+		>
 	{:else}
 		<p>{$web3Data.error}</p>
-		<button on:click={initializeWeb3Provider}>Connect</button>
+		<button
+			class="py-2 px-2 m-2 rounded-lg bg-white/20 border border-black/50"
+			on:click={initializeWeb3Provider}>Connect</button
+		>
 	{/if}
 </div>
+<slot />
