@@ -15,13 +15,13 @@
 		try {
 			const { ethereum } = window;
 			if (!ethereum) {
-				throw new Error('Please install MetaMask.');
+				throw new Error("Please install MetaMask.");
 			}
 
 			web3Data.update((data) => ({ ...data, connecting: true }));
 
 			const provider = new ethers.providers.Web3Provider(ethereum);
-			await ethereum.request({ method: 'eth_requestAccounts' });
+			await ethereum.request({ method: "eth_requestAccounts" });
 
 			const network = await provider.getNetwork();
 			const signer = provider.getSigner();
@@ -38,16 +38,18 @@
 				signer,
 				connecting: false,
 				connected: true,
-				error: '',
-				contractAddress: '',
-				formattedBalance: ''
+				error: "",
+				contractAddress: "",
+				formattedBalance: "",
 			});
+			fetchPlayerInfo();
+			fetchHiveInfo();
 		} catch (err: any) {
 			web3Data.update((data) => ({
 				...data,
 				connecting: false,
 				connected: false,
-				error: err.reason || err.message || 'An error occurred.'
+				error: err.reason || err.message || "An error occurred.",
 			}));
 		}
 	}
@@ -57,34 +59,44 @@
 			const { ethereum } = window;
 			if (ethereum) {
 				await ethereum.request({
-					method: 'eth_requestAccounts',
-					params: [{ eth_accounts: [] }]
+					method: "eth_requestAccounts",
+					params: [{ eth_accounts: [] }],
 				});
 
 				web3Data.set({
-					contractAddress: '',
+					contractAddress: "",
 					connecting: false,
 					connected: false,
-					error: '',
-					formattedBalance: ''
+					error: "",
+					formattedBalance: "",
 				});
 			}
 		} catch (err) {
-			console.error('Error disconnecting:', err);
+			console.error("Error disconnecting:", err);
 		}
 	}
 
 	onMount(() => {
 		const { ethereum } = window;
 		if (ethereum) {
-			ethereum.on('accountsChanged', () => {
-				console.log('Accounts changed');
-				initializeWeb3Provider();
+			ethereum.on("accountsChanged", () => {
+				console.log("Accounts changed");
+				web3Data.update((data) => ({
+					...data,
+					connecting: false,
+					connected: false,
+				}));
+				location.reload();
 			});
 
-			ethereum.on('chainChanged', () => {
-				console.log('Chain changed');
-				initializeWeb3Provider();
+			ethereum.on("chainChanged", () => {
+				console.log("Chain changed");
+				web3Data.update((data) => ({
+					...data,
+					connecting: false,
+					connected: false,
+				}));
+				location.reload();
 			});
 		}
 	});
